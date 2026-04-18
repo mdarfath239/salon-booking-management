@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const Appointment = require("../models/Appointment");
+const User = require("../models/User");
+const Service = require("../models/Service");
 const adminAuth = require("../middleware/adminAuth");
+const { sendConfirmationEmail } = require("../utils/sendEmail");
 
 // Create Appointment
 router.post("/", async (req, res) => {
@@ -18,6 +21,20 @@ router.post("/", async (req, res) => {
       date,
       timeSlot
     });
+
+    // Fetch user and service details for email
+    const user = await User.findById(userId);
+    const service = await Service.findById(serviceId);
+
+    if (user && service && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      await sendConfirmationEmail(
+        user.email,
+        user.name,
+        service.name,
+        date,
+        timeSlot
+      );
+    }
 
     return res.json(appointment);
   } catch (error) {
