@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Appointment = require("../models/Appointment");
+const adminAuth = require("../middleware/adminAuth");
 
 // Create Appointment
 router.post("/", async (req, res) => {
@@ -36,18 +37,32 @@ router.get("/date/:date", async (req, res) => {
   }
 });
 
+// Get All Appointments (Admin only)
+router.get("/all", adminAuth, async (req, res) => {
+  try {
+    const appointments = await Appointment.find()
+      .populate("userId", "name email")
+      .populate("serviceId", "name price")
+      .sort({ date: -1, timeSlot: 1 });
+    
+    return res.json(appointments);
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+});
+
 // Get User Appointments
 router.get("/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
+    if (userId === "all") return; // Let the /all route handle it
+
     const data = await Appointment.find({ userId }).populate("serviceId").sort({ date: 1, timeSlot: 1 });
     return res.json(data);
   } catch (error) {
     return res.status(500).json(error.message);
   }
 });
-
-// Cancel Appointment
 router.put("/cancel/:id", async (req, res) => {
   try {
     const { id } = req.params;
