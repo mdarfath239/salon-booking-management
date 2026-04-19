@@ -14,22 +14,22 @@ export default function MyAppointments() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
+  const fetchAppointments = async () => {
+    try {
+      const res = await api.get(`/appointments/${user._id}`);
+      setAppointments(res.data);
+    } catch (error) {
+      setMessage(error.response?.data || "Unable to load appointments.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
       return;
     }
-
-    const fetchAppointments = async () => {
-      try {
-        const res = await api.get(`/appointments/${user._id}`);
-        setAppointments(res.data);
-      } catch (error) {
-        setMessage(error.response?.data || "Unable to load appointments.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
     fetchAppointments();
     // eslint-disable-next-line react-hooks/exhaustive-deps

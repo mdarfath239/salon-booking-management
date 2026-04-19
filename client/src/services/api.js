@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:process.env.REACT_APP_API_URL 
+  baseURL: process.env.REACT_APP_API_URL || "https://salon-backend-j7iy.onrender.com/api"
 });
 
 // Add a request interceptor to automatically add the JWT token to headers

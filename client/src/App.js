@@ -8,7 +8,6 @@ import Register from "./pages/Register";
 import Booking from "./pages/Booking";
 import MyAppointments from "./pages/MyAppointments";
 import AdminDashboard from "./pages/AdminDashboard";
-import "./App.css";
 
 function App() {
   return (
