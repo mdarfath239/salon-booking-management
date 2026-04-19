@@ -13,6 +13,8 @@ export default function AdminDashboard() {
   const [filterStatus, setFilterStatus] = useState("");
   const [newService, setNewService] = useState({ name: "", price: "", duration: "" });
   
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -99,11 +101,15 @@ export default function AdminDashboard() {
 
   return (
     <div className="admin-container">
-      <div className="admin-sidebar">
+      <button className="admin-menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)} aria-label="Toggle sidebar">
+        {sidebarOpen ? '✕' : '☰'}
+      </button>
+      {sidebarOpen && <div className="admin-overlay" onClick={() => setSidebarOpen(false)} />}
+      <div className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <h2>Admin Dashboard</h2>
         <nav>
-          <Link to="/">Home</Link>
-          <button className="btn-link" onClick={handleLogout}>Logout</button>
+          <Link to="/" onClick={() => setSidebarOpen(false)}>Home</Link>
+          <button className="btn-link" onClick={() => { handleLogout(); setSidebarOpen(false); }}>Logout</button>
         </nav>
       </div>
 

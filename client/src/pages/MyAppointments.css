@@ -155,3 +155,97 @@
   background-color: #6c757d;
   cursor: not-allowed;
 }
+
+/* Appointment card (class used in JSX) */
+.appointment-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fafafa;
+  gap: 1rem;
+}
+
+/* ===== TABLET ≤ 768px ===== */
+@media (max-width: 768px) {
+  .my-appointments-container {
+    padding: 1.5rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .my-appointments-card {
+    padding: 1.5rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .header h2 {
+    font-size: 1.5rem;
+  }
+
+  .appointment-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .appointment-actions {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .appointment-actions button {
+    flex: 1;
+  }
+}
+
+/* ===== MOBILE ≤ 480px ===== */
+@media (max-width: 480px) {
+  .my-appointments-container {
+    padding: 0.75rem;
+    padding-top: 1rem;
+  }
+
+  .my-appointments-card {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .header h2 {
+    font-size: 1.25rem;
+  }
+
+  .header-links {
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .appointment-card {
+    padding: 1rem;
+  }
+
+  .appointment-details h3 {
+    font-size: 1rem;
+  }
+
+  .appointment-details p {
+    font-size: 0.875rem;
+  }
+
+  .appointment-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancel, .btn-pay {
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
 export default function Home() {
   const user = JSON.parse(localStorage.getItem('user'));
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -15,27 +16,32 @@ export default function Home() {
       {/* Navigation */}
       <nav className="home-nav">
         <div className="nav-logo">GlossBook</div>
-        <div className="nav-links">
-          <a href="#features">Features</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#about">About</a>
-        </div>
-        <div className="nav-actions">
-          {user ? (
-            <>
-              {user.role === 'admin' ? (
-                <Link to="/admin" className="btn-primary">Admin Dashboard</Link>
-              ) : (
-                <Link to="/my-bookings" className="btn-primary">My Bookings</Link>
-              )}
-              <button className="nav-login" onClick={handleLogout} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="nav-login">Login</Link>
-              <Link to="/register" className="btn-primary">Get Started</Link>
-            </>
-          )}
+        <button className="nav-hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+          {menuOpen ? '✕' : '☰'}
+        </button>
+        <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+          <div className="nav-links">
+            <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
+            <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
+            <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+          </div>
+          <div className="nav-actions">
+            {user ? (
+              <>
+                {user.role === 'admin' ? (
+                  <Link to="/admin" className="btn-primary" onClick={() => setMenuOpen(false)}>Admin Dashboard</Link>
+                ) : (
+                  <Link to="/my-bookings" className="btn-primary" onClick={() => setMenuOpen(false)}>My Bookings</Link>
+                )}
+                <button className="nav-login" onClick={() => { handleLogout(); setMenuOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>Logout</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="nav-login" onClick={() => setMenuOpen(false)}>Login</Link>
+                <Link to="/register" className="btn-primary" onClick={() => setMenuOpen(false)}>Get Started</Link>
+              </>
+            )}
+          </div>
         </div>
       </nav>
 
