@@ -155,9 +155,9 @@ export default function Home() {
           <div className="footer-links">
             <div className="footer-col">
               <h4>Links</h4>
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
-              <a href="#">Contact Us</a>
+              <Link to="#">Privacy Policy</Link>
+              <Link to="#">Terms of Service</Link>
+              <Link to="#">Contact Us</Link>
             </div>
             <div className="footer-col">
               <h4>Newsletter</h4>

@@ -20,21 +20,20 @@ export default function MyAppointments() {
       return;
     }
 
-    fetchAppointments();
-  }, [navigate]);
+    const fetchAppointments = async () => {
+      try {
+        const res = await api.get(`/appointments/${user._id}`);
+        setAppointments(res.data);
+      } catch (error) {
+        setMessage(error.response?.data || "Unable to load appointments.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const fetchAppointments = async () => {
-    setIsLoading(true);
-    try {
-      const res = await api.get(`/appointments/${user._id}`);
-      setAppointments(res.data);
-    } catch (error) {
-      setMessage("Failed to load appointments.");
-      setIsSuccess(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    fetchAppointments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate]);
 
   const handleCancel = async (id) => {
     try {
